@@ -84,17 +84,6 @@ for k, v in list(cleaned_texts.items())[:3]:
     print(f"--- {k} ---")
     print(v[:300])  # first 300 characters
 
-# results = {}
-# for file, text in cleaned_texts.items():
-#     results[file] = compute_all_metrics(text)
-
-# # Convert to DataFrame if needed
-# import pandas as pd
-# df_metrics = pd.DataFrame.from_dict(results, orient='index')
-# df_metrics.to_csv("article_metrics.csv", index=True)
-
-# df_results = save_all_metrics()
-# print("Results saved successfully!")
 
 # -----------------------------
 # Save final metrics
