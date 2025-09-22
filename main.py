@@ -36,6 +36,32 @@ import os
 # - Read Input.xlsx
 # - Extract URL_ID and URL columns
 # - Prepare dataframe for processing
+"""
+Step 2: Load Input Data
+"""
+
+import pandas as pd
+
+# Load the input Excel file
+input_file = "Input.xlsx"
+df = pd.read_excel(input_file)
+
+# Preview the first few rows
+print("Input Data (head):")
+print(df.head())
+
+# Check if URL_IDs are unique
+print("\nAre all URL_IDs unique? ->", df['URL_ID'].is_unique)
+
+# Check duplicate URLs (how many times each appears)
+print("\nURL value counts (duplicates check):")
+print(df['URL'].value_counts().head(10))  # show top 10 duplicates
+
+# Optional: Create a cleaned dataframe with duplicates flagged
+df['is_duplicate_url'] = df.duplicated(subset='URL', keep=False)
+
+print("\nRows with duplicate URLs:")
+print(df[df['is_duplicate_url']].head())
 
 
 # ==============================
