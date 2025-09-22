@@ -7,6 +7,27 @@ Objective: Extract text from URLs, clean it, and compute sentiment + readability
 # 1. Import Required Libraries
 # ==============================
 # (List of imports we will need later, e.g., requests, bs4, nltk, pandas, etc.)
+"""
+Step 1: Import Required Libraries
+"""
+
+# For data handling
+import pandas as pd
+
+# For web scraping
+import requests
+from bs4 import BeautifulSoup
+
+# For text processing
+import re
+import nltk
+from nltk.tokenize import word_tokenize, sent_tokenize
+
+# For working with Excel
+import openpyxl
+
+# For handling file paths
+import os
 
 
 # ==============================
