@@ -93,5 +93,20 @@ for k, v in list(cleaned_texts.items())[:3]:
 # df_metrics = pd.DataFrame.from_dict(results, orient='index')
 # df_metrics.to_csv("article_metrics.csv", index=True)
 
-df_results = save_all_metrics()
-print("Results saved successfully!")
+# df_results = save_all_metrics()
+# print("Results saved successfully!")
+
+# -----------------------------
+# Save final metrics
+# -----------------------------
+try:
+    df_results = save_all_metrics(INPUT_FILE, CLEANED_FOLDER)
+except Exception as e:
+    print(f"Error while merging metrics with URLs: {e}")
+    df_results = None
+
+if df_results is not None:
+    print("Results saved successfully!")
+    print("\nPreview of results:")
+    print(df_results.head(5))  # show first 5 rows
+
