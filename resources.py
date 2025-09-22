@@ -28,18 +28,40 @@ def load_stopwords(stopword_files):
     return all_stopwords
 
 
+# def load_sentiment_words(file_path):
+#     """
+#     Loads positive or negative word list into a set.
+#     Each word is expected to be on a separate line.
+#     """
+#     words = set()
+#     with open(file_path, 'r', encoding='utf-8') as f:
+#         for line in f:
+#             word = line.strip().lower()
+#             if word:
+#                 words.add(word)
+#     return words
+
 def load_sentiment_words(file_path):
     """
     Loads positive or negative word list into a set.
     Each word is expected to be on a separate line.
     """
     words = set()
-    with open(file_path, 'r', encoding='utf-8') as f:
-        for line in f:
-            word = line.strip().lower()
-            if word:
-                words.add(word)
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                word = line.strip().lower()
+                if word:
+                    words.add(word)
+    except UnicodeDecodeError:
+        with open(file_path, 'r', encoding='latin-1') as f:
+            for line in f:
+                word = line.strip().lower()
+                if word:
+                    words.add(word)
     return words
+
+
 
 
 # ------------------------------
