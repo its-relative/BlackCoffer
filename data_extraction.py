@@ -33,11 +33,11 @@ def extract_article(url):
             return title, ""
 
         # Remove "Contact Details" section if it exists
-        contact_heading = content_div.find("h1", string=re.compile("Contact Details", re.I))
-        if contact_heading:
-            for elem in contact_heading.find_all_next():
-                elem.decompose()
-            contact_heading.decompose()
+        # contact_heading = content_div.find("h1", string=re.compile("Contact Details", re.I))
+        # if contact_heading:
+        #     for elem in contact_heading.find_all_next():
+        #         elem.decompose()
+        #     contact_heading.decompose()
 
         # Clean text
         text = content_div.get_text(separator=" ", strip=True)
