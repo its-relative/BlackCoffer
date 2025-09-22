@@ -1,32 +1,30 @@
-import pandas as pd
-from data_extraction import save_articles, extract_article
-from text_cleaning import clean_text
+from tqdm import tqdm
 import os
+from text_cleaning import clean_text
 
-# Load input Excel file
-df = pd.read_excel("Input.xlsx")  # assumes columns URL_ID, URL
-
-# Step 3: Extract articles **only if missing**
 OUTPUT_FOLDER = "extracted_articles"
-os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+CLEANED_FOLDER = "cleaned_articles"
+os.makedirs(CLEANED_FOLDER, exist_ok=True)
 
-# Get already extracted files (without .txt extension)
-existing_files = {f.replace(".txt", "") for f in os.listdir(OUTPUT_FOLDER) if f.endswith(".txt")}
+# Already cleaned files
+cleaned_files = {f.replace(".txt", "") for f in os.listdir(CLEANED_FOLDER) if f.endswith(".txt")}
 
-# Filter dataframe to only URLs that are missing
-df_missing = df[~df["URL_ID"].isin(existing_files)].reset_index(drop=True)
-
-# Save missing articles
-save_articles(df_missing)
-
-# Step 5: Load all saved articles and clean them
 cleaned_texts = {}
-for file in os.listdir(OUTPUT_FOLDER):
-    if file.endswith(".txt"):
-        path = os.path.join(OUTPUT_FOLDER, file)
-        with open(path, "r", encoding="utf-8") as f:
-            raw_text = f.read()
-        cleaned_texts[file] = clean_text(raw_text)
+
+# Only process files that exist but aren't cleaned yet
+files_to_process = [f for f in os.listdir(OUTPUT_FOLDER) if f.endswith(".txt") and f.replace(".txt","") not in cleaned_files]
+
+for file in tqdm(files_to_process, desc="Cleaning articles"):
+    path = os.path.join(OUTPUT_FOLDER, file)
+    with open(path, "r", encoding="utf-8") as f:
+        raw_text = f.read()
+
+    cleaned = clean_text(raw_text)
+    cleaned_texts[file] = cleaned
+
+    # Save cleaned version
+    with open(os.path.join(CLEANED_FOLDER, file), "w", encoding="utf-8") as f:
+        f.write(cleaned)
 
 # Optional: print first few cleaned texts
 for k, v in list(cleaned_texts.items())[:3]:
